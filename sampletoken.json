@@ -1,4 +1,6 @@
 {
-    "initialSupply": "0x3e8",
-    "decimals": "0x12"
+    "params": {
+        "initialSupply": "0x3e8",
+        "decimals": "0x12"
+    }
 }
