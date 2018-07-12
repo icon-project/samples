@@ -6,5 +6,5 @@
 
 ## References
 
-* [ICON Token Standard Proposal (draft)](https://repo.theloop.co.kr/icon/icon/issues/67)
+* [ICON Token Standard Proposal (draft)](https://repo.theloop.co.kr/icon/icon/wikis/ircs/irc2-token-standard)
 
