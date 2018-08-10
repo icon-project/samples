@@ -1,15 +1,19 @@
 {
     "uri": "http://127.0.0.1:9000/api/v3",
-    "scoreType": "tbears",
-    "mode": "install",
+    "nid": "0x3",
     "keyStore": null,
     "from": "hxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "to": "cx0000000000000000000000000000000000000000",
-    "stepLimit": "0x12345",
-    "txType": "dummy",
-    "scoreParams": {
-        "fundingGoalInIcx": "0x64",
-        "tokenScore": "cxdee5958e6a496f0a130446f731fe3c98d1680e01",
-        "durationInBlocks": "0x10"
-    }
+    "stepLimit": "0x300000",
+    "deploy": {
+        "contentType": "tbears",
+        "mode": "install",
+        "scoreParams": {
+            "fundingGoalInIcx": "0x64",
+            "tokenScore": "cxdee5958e6a496f0a130446f731fe3c98d1680e01",
+            "durationInBlocks": "0x10"
+        }
+    },
+    "txresult": {},
+    "transfer": {}
 }
