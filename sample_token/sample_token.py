@@ -1,34 +1,31 @@
-import abc
-
 from iconservice import *
 
 TAG = 'SampleToken'
 
 
 # An interface of ICON Token Standard, IRC-2
-class TokenStandard(abc.ABC):
-
-    @abc.abstractmethod
+class TokenStandard(ABC):
+    @abstractmethod
     def name(self) -> str:
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def symbol(self) -> str:
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def decimals(self) -> int:
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def totalSupply(self) -> int:
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def balanceOf(self, _owner: Address) -> int:
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def transfer(self, _to: Address, _value: int, _data: bytes = None):
         pass
 
@@ -37,7 +34,6 @@ class TokenStandard(abc.ABC):
 # Receiving SCORE that has implemented this interface can handle
 # the receiving or further routine.
 class TokenFallbackInterface(InterfaceScore):
-
     @interface
     def tokenFallback(self, _from: Address, _value: int, _data: bytes):
         pass
@@ -116,8 +112,8 @@ class SampleToken(IconScoreBase, TokenStandard):
         self._balances[_to] = self._balances[_to] + _value
 
         if _to.is_contract:
-            # If the recipient is SCORE
-            #   than calls `tokenFallback` to pass the handle to it.
+            # If the recipient is SCORE,
+            #   then calls `tokenFallback` to hand over control.
             recipient_score = self.create_interface_score(_to, TokenFallbackInterface)
             recipient_score.tokenFallback(_from, _value, _data)
 
