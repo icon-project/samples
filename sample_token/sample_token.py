@@ -5,7 +5,9 @@ from iconservice import *
 TAG = 'SampleToken'
 
 
+# An interface of ICON Token Standard, IRC-2
 class TokenStandard(abc.ABC):
+
     @abc.abstractmethod
     def name(self) -> str:
         pass
@@ -27,17 +29,20 @@ class TokenStandard(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def transfer(self, _to: Address, _value: int, _data: bytes=None):
+    def transfer(self, _to: Address, _value: int, _data: bytes = None):
         pass
 
 
+# An interface of tokenFallback.
+# Receiving SCORE that has implemented this interface can handle
+# the receiving or further routine.
 class TokenFallbackInterface(InterfaceScore):
+
     @interface
     def tokenFallback(self, _from: Address, _value: int, _data: bytes):
         pass
 
 
-# noinspection PyPep8Naming
 class SampleToken(IconScoreBase, TokenStandard):
 
     _BALANCES = 'balances'
@@ -56,6 +61,12 @@ class SampleToken(IconScoreBase, TokenStandard):
 
     def on_install(self, _initialSupply: int, _decimals: int) -> None:
         super().on_install()
+
+        if _initialSupply < 0:
+            revert("Initial supply cannot be less than zero")
+
+        if _decimals < 0:
+            revert("Decimals cannot be less than zero")
 
         total_supply = _initialSupply * 10 ** _decimals
         Logger.debug(f'on_install: total_supply={total_supply}', TAG)
@@ -88,19 +99,28 @@ class SampleToken(IconScoreBase, TokenStandard):
         return self._balances[_owner]
 
     @external
-    def transfer(self, _to: Address, _value: int, _data: bytes=None):
+    def transfer(self, _to: Address, _value: int, _data: bytes = None):
         if _data is None:
             _data = b'None'
         self._transfer(self.msg.sender, _to, _value, _data)
 
     def _transfer(self, _from: Address, _to: Address, _value: int, _data: bytes):
+
+        # Checks the sending value and balance.
+        if _value < 0:
+            revert("Transferring value cannot be less than zero")
         if self._balances[_from] < _value:
-            self.revert("Out of balance")
+            revert("Out of balance")
 
         self._balances[_from] = self._balances[_from] - _value
         self._balances[_to] = self._balances[_to] + _value
+
         if _to.is_contract:
-            receiver_score = self.create_interface_score(_to, TokenFallbackInterface)
-            receiver_score.tokenFallback(_from, _value, _data)
+            # If the recipient is SCORE
+            #   than calls `tokenFallback` to pass the handle to it.
+            recipient_score = self.create_interface_score(_to, TokenFallbackInterface)
+            recipient_score.tokenFallback(_from, _value, _data)
+
+        # Emits an event log `Transfer`
         self.Transfer(_from, _to, _value, _data)
         Logger.debug(f'Transfer({_from}, {_to}, {_value}, {_data})', TAG)
