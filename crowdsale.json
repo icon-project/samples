@@ -4,16 +4,14 @@
     "keyStore": null,
     "from": "hxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "to": "cx0000000000000000000000000000000000000000",
-    "stepLimit": "0x300000",
+    "stepLimit": "0x5000000",
     "deploy": {
-        "contentType": "tbears",
+        "contentType": "zip",
         "mode": "install",
         "scoreParams": {
-            "fundingGoalInIcx": "0x64",
-            "tokenScore": "cxdee5958e6a496f0a130446f731fe3c98d1680e01",
-            "durationInBlocks": "0x10"
+            "_fundingGoalInIcx": "0x64",
+            "_tokenScore": "cx5afaf001f490f494ddeba5bcf4dd05fa47df7589",
+            "_durationInBlocks": "0x10"
         }
-    },
-    "txresult": {},
-    "transfer": {}
+    }
 }

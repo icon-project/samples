@@ -4,15 +4,13 @@
     "keyStore": null,
     "from": "hxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "to": "cx0000000000000000000000000000000000000000",
-    "stepLimit": "0x300000",
+    "stepLimit": "0x4000000",
     "deploy": {
-        "contentType": "tbears",
+        "contentType": "zip",
         "mode": "install",
         "scoreParams": {
-            "initialSupply": "0x3e8",
-            "decimals": "0x12"
+            "_initialSupply": "0x3e8",
+            "_decimals": "0x12"
         }
-    },
-    "txresult": {},
-    "transfer": {}
+    }
 }
