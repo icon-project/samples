@@ -79,7 +79,7 @@ Please refer to [Github](https://github.com/icon-project/samples/) for complete 
 
 ### Invoke a method from CLI
 
-Below is the T-Bears CLI comand to invoke the SCORE's external read-only method. Before issuing the command, don't forget to change the "to" value in the JSON request with an actual SCORE address. 
+Below is the T-Bears CLI command to invoke the SCORE's external read-only method. Before issuing the command, don't forget to change the "to" value in the JSON request with an actual SCORE address. 
 
 ```bash
 root@07dfee84208e:/tbears# cat call.json 
