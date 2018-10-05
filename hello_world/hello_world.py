@@ -19,15 +19,13 @@ class HelloWorld(IconScoreBase):
 
     @external(readonly=True)
     def hello(self) -> str:
-        Logger.info(f'Hello, world!', TAG)
+        Logger.info('Hello, world!', TAG)
         return "Hello"
 
     @payable
-    def fallback(self) -> None:
-        Logger.info(f'fallback is called', TAG)
-        pass
+    def fallback(self):
+        Logger.info('fallback is called', TAG)
 
     @external
-    def tokenFallback(self, _from: Address, _value: int, _data: bytes) -> None:
-        Logger.info(f'tokenFallabck is called', TAG)
-        pass
+    def tokenFallback(self, _from: Address, _value: int, _data: bytes):
+        Logger.info('tokenFallabck is called', TAG)

@@ -51,21 +51,23 @@ class HelloWorld(IconScoreBase):
 
     @external(readonly=True)
     def hello(self) -> str:
-        Logger.info(f'Hello, world!', TAG)
+        Logger.info('Hello, world!', TAG)
         return "Hello"
 
     @payable
-    def fallback(self) -> None:
-        Logger.info(f'fallback is called', TAG)
-        pass
+    def fallback(self):
+        Logger.info('fallback is called', TAG)
 
     @external
-    def tokenFallback(self, _from: Address, _value: int, _data: bytes) -> None:
-        Logger.info(f'tokenFallabck is called', TAG)
-        pass
+    def tokenFallback(self, _from: Address, _value: int, _data: bytes):
+        Logger.info('tokenFallabck is called', TAG)
 ```
 
-`fallback` function is added to accept ICX. `fallback` function is executed when the contract receives a transaction request without `data` part. Not having `data` in the transaction request means no method name is specified. In such case, `fallback` function is invoked if the function is provided. If `fallback` function is not given, the transaction will fail. Only functions with `@payable` decorator are permitted to receive ICX coins, therefore, our `fallback` function should be also  `@payable`.  You don't need to implement anything in the fallback function to handle the ICX transfer. Having payable fallback function declares that the contract accepts ICX coin transfer. 
+`fallback` function is added to accept ICX. `fallback` function is executed when the contract receives a transaction request without `data` part. Not having `data` in the transaction means no method name is specified. In such case, `fallback` function is invoked if the function is provided. If `fallback` function is not given, the transaction will fail. 
+
+ICX transfer request message does not have `data` part. So, the default behavior of any contract is rejecting incoming ICX. This design is to prevent any accidental ICX transfer to a contract. 
+
+Only functions with `@payable` decorator are permitted to receive ICX coins, therefore, our `fallback` function should be also  `@payable` because we want the contract receive ICX.  You don't need to implement anything in the fallback function to handle the ICX transfer. Having payable fallback function declares that the contract is designed to accept ICX coin transfer. 
 
 `tokenFallback` method is added to accept IRC2 tokens. The [IRC2](https://github.com/icon-project/IIPs/blob/master/IIPS/iip-2.md#token-fallback) standard mandates the `tokenFallback` method in the receiving SCORE.  Token contact will call the `tokenFallback` funtion whenever it transfers  token to a contract address.
 
