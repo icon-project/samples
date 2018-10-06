@@ -114,12 +114,15 @@ $ pip3 install iconsdk
 - Go to the `test` folder, open `test.py`, and change the variables.
 
 ```bash
-$ ls hello_world
-hello_world.py  __init__.py  package.json  README.md  test
-
-$ cd hello_world/test
-$ ls 
-keystore_test1	test.py
+$ tree hello_world
+hello_world
+├── README.md
+├── __init__.py
+├── hello_world.py
+├── package.json
+└── test
+    ├── keystore_test1
+    └── test.py
 ```
 
 Use the actual SCORE addresses. We need `standard_token` contract to test token transfer. If you test on T-Bears, use the default `node_uri`. If test on other network, change the `node_uri` and `network_id` accordingly. 
