@@ -67,9 +67,9 @@ class HelloWorld(IconScoreBase):
 
 ICX transfer request message does not have `data` part. So, the default behavior of any contract is rejecting incoming ICX. This design is to prevent any accidental ICX transfer to a contract. 
 
-Only functions with `@payable` decorator are permitted to receive ICX coins, therefore, our `fallback` function should be also  `@payable` because we want the contract receive ICX.  You don't need to implement anything in the fallback function to handle the ICX transfer. Having payable fallback function declares that the contract is designed to accept ICX coin transfer. 
+Only functions with `@payable` decorator are permitted to receive ICX coins, therefore, our `fallback` function should be also  `@payable` because we want the contract to receive ICX.  You don't need to implement anything in the fallback function to handle the ICX transfer. Having payable fallback function declares that the contract is designed to accept ICX coin transfer. 
 
-`tokenFallback` method is added to accept IRC2 tokens. The [IRC2](https://github.com/icon-project/IIPs/blob/master/IIPS/iip-2.md#token-fallback) standard mandates the `tokenFallback` method in the receiving SCORE.  Token contact will call the `tokenFallback` funtion whenever it transfers  token to a contract address.
+`tokenFallback` method is added to accept IRC2 tokens. The [IRC2](https://github.com/icon-project/IIPs/blob/master/IIPS/iip-2.md#token-fallback) standard mandates the `tokenFallback` method in the receiving SCORE.  Token contract will call the `tokenFallback` function whenever it transfers  token to a contract address.
 
 
 
