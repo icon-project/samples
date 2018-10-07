@@ -147,3 +147,13 @@ Ran 8 tests in 16.702s
 
 OK
 ```
+
+If you tailed a log, you would see the logs printing.
+
+```bash
+$ tail -f tbears.log | grep '\[HelloWorld\]'
+[INFO|logger.py:332] 2018-10-07 18:10:48,974 > [HelloWorld] Hello, world!
+[INFO|logger.py:332] 2018-10-07 18:10:58,194 > [HelloWorld] fallback is called
+[INFO|logger.py:332] 2018-10-07 18:10:58,219 > [HelloWorld] tokenFallabck is called
+```
+
