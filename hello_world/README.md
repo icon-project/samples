@@ -111,21 +111,22 @@ response : {
 $ pip3 install iconsdk
 ```
 
-- Go to the `test` folder, open `test.py`, and change the variables.
+- Go to the `tests` folder, open `test.py`, and change the global variables.
 
 ```bash
 $ tree hello_world
 hello_world
 ├── README.md
-├── __init__.py
-├── hello_world.py
-├── package.json
-└── test
+├── hello_world
+│   ├── __init__.py
+│   ├── hello_world.py
+│   └── package.json
+└── tests
     ├── keystore_test1
     └── test.py
 ```
 
-Use the actual SCORE addresses. We need `standard_token` contract to test token transfer. If you test on T-Bears, use the default `node_uri`. If test on other network, change the `node_uri` and `network_id` accordingly. 
+Use the actual SCORE addresses. To run the test, `keystore_test1` should have a positive amount of IRC2 tokens. Deploy the [IRC2 token contract](https://github.com/sink772/IRC2-token-standard) with `-k keystore_test1` option, then all the initial token supply will go to the account. If you test on T-Bears, use the default `node_uri`. If test on other network, change the `node_uri` and `network_id` accordingly. 
 
 
 ```python
@@ -133,17 +134,15 @@ node_uri = "http://localhost:9000/api/v3"
 network_id = 3
 hello_world_address = "cx3176b5d6cae66a1abbc3ca9070423a5c708834a9"
 token_address = "cx9a4c4229ab2cbd61a5cc051fbbb6ee7e3e3adfac"
-keystore_path = "./keystore_test1"
-keystore_pw = "test1_Account"
 ```
 
 - Run the test.
 
 ```bash
 $ python3 test.py
-........
+....
 ----------------------------------------------------------------------
-Ran 8 tests in 16.702s
+Ran 4 tests in 20.369s
 
 OK
 ```
