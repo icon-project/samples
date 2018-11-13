@@ -55,7 +55,7 @@ class TestSampleToken(IconIntegrateTestBase):
         tx_result = self.process_transaction(signed_transaction, self.icon_service)
 
         self.assertTrue('status' in tx_result)
-        self.assertEqual(tx_result['status'], 1)
+        self.assertEqual(1, tx_result['status'])
         self.assertTrue('scoreAddress' in tx_result)
 
         return tx_result
@@ -64,7 +64,7 @@ class TestSampleToken(IconIntegrateTestBase):
         # update SCORE
         tx_result = self._deploy_score(to=self._score_address)
 
-        self.assertEqual(tx_result['scoreAddress'], self._score_address)
+        self.assertEqual(self._score_address, tx_result['scoreAddress'])
 
     def test_call_name(self):
         # Generates a call instance using the CallBuilder
@@ -76,7 +76,7 @@ class TestSampleToken(IconIntegrateTestBase):
         # Sends the call request
         response = self.process_call(call, self.icon_service)
 
-        self.assertEqual(response, "SampleToken")
+        self.assertEqual("SampleToken", response)
 
     def test_call_symbol(self):
         # Generates a call instance using the CallBuilder
@@ -88,7 +88,7 @@ class TestSampleToken(IconIntegrateTestBase):
         # Sends the call request
         response = self.process_call(call, self.icon_service)
 
-        self.assertEqual(response, "ST")
+        self.assertEqual("ST", response)
 
     def test_call_decimals(self):
         # Generates a call instance using the CallBuilder
@@ -100,7 +100,7 @@ class TestSampleToken(IconIntegrateTestBase):
         # Sends the call request
         response = self.process_call(call, self.icon_service)
 
-        self.assertEqual(response, self.decimals)
+        self.assertEqual(hex(self.decimals), response)
 
     def test_call_totalSupply(self):
         # Generates a call instance using the CallBuilder
@@ -112,7 +112,7 @@ class TestSampleToken(IconIntegrateTestBase):
         # Sends the call request
         response = self.process_call(call, self.icon_service)
 
-        self.assertEqual(response, self.initial_supply * 10 ** self.decimals)
+        self.assertEqual(hex(self.initial_supply * 10 ** self.decimals), response)
 
     def test_call_balanceOf(self):
         # Make params of balanceOf method
@@ -130,7 +130,7 @@ class TestSampleToken(IconIntegrateTestBase):
         # Sends the call request
         response = self.process_call(call, self.icon_service)
 
-        self.assertEqual(response, self.initial_supply * 10 ** self.decimals)
+        self.assertEqual(hex(self.initial_supply * 10 ** self.decimals), response)
 
     def test_token_transfer(self):
         # Make params of transfer method
@@ -159,7 +159,7 @@ class TestSampleToken(IconIntegrateTestBase):
         tx_result = self.process_transaction(signed_transaction, self.icon_service)
 
         self.assertTrue('status' in tx_result)
-        self.assertEqual(tx_result['status'], 1)
+        self.assertEqual(1, tx_result['status'])
 
         # Make params of balanceOf method
         params = {
@@ -176,4 +176,4 @@ class TestSampleToken(IconIntegrateTestBase):
         response = self.process_call(call, self.icon_service)
 
         # check balance of receiver
-        self.assertEqual(response, value)
+        self.assertEqual(hex(value), response)
