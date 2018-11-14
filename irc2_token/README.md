@@ -8,7 +8,6 @@
 
 ```bash
 $ tbears deploy -k <keystore_file> -c sampletoken.json sample_token
-$ tbears deploy -k <keystore_file> -c crowdsale.json sample_crowdsale
 ```
 
 ## References
