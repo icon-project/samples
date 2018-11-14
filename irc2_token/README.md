@@ -10,6 +10,12 @@
 $ tbears deploy -k <keystore_file> -c sampletoken.json sample_token
 ```
 
+## Test
+```bash
+$ tbears test sample_token
+$ tbears test sample_crowdsale
+```
+
 ## References
 
 * [ICON Token Standard](https://github.com/icon-project/IIPs/blob/master/IIPS/iip-2.md)
