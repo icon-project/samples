@@ -20,7 +20,7 @@ DIR_PATH = os.path.abspath(os.path.dirname(__file__))
 class TestSampleCrowdsale(IconIntegrateTestBase):
     TEST_HTTP_ENDPOINT_URI_V3 = "http://127.0.0.1:9000/api/v3"
     SCORE_PROJECT = os.path.abspath(os.path.join(DIR_PATH, '..'))
-    TOKEN_SCORE_PROJECT = os.path.abspath(os.path.join(DIR_PATH, '../../sample_token'))
+    TOKEN_SCORE_PROJECT = os.path.abspath(os.path.join(DIR_PATH, '../../../irc2_token/sample_token'))
 
     def setUp(self):
         super().setUp()

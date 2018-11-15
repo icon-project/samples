@@ -13,7 +13,6 @@ $ tbears deploy -k <keystore_file> -c sampletoken.json sample_token
 ## Test
 ```bash
 $ tbears test sample_token
-$ tbears test sample_crowdsale
 ```
 
 ## References
