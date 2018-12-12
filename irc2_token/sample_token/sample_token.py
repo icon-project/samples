@@ -63,6 +63,8 @@ class SampleToken(IconScoreBase, TokenStandard):
 
         if _decimals < 0:
             revert("Decimals cannot be less than zero")
+        if _decimals > 21:
+            revert("Decimals cannot be more than 21")
 
         total_supply = _initialSupply * 10 ** _decimals
         Logger.debug(f'on_install: total_supply={total_supply}', TAG)
