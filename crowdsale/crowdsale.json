@@ -11,7 +11,7 @@
         "scoreParams": {
             "_fundingGoalInIcx": "0x64",
             "_tokenScore": "cx5afaf001f490f494ddeba5bcf4dd05fa47df7589",
-            "_durationInBlocks": "0x10"
+            "_durationInBlocks": "0x32"
         }
     }
 }
