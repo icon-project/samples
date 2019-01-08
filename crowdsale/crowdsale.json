@@ -4,14 +4,14 @@
     "keyStore": null,
     "from": "hxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "to": "cx0000000000000000000000000000000000000000",
-    "stepLimit": "0x5000000",
+    "stepLimit": "0x77359400",
     "deploy": {
         "contentType": "zip",
         "mode": "install",
         "scoreParams": {
             "_fundingGoalInIcx": "0x64",
             "_tokenScore": "cx5afaf001f490f494ddeba5bcf4dd05fa47df7589",
-            "_durationInBlocks": "0x10"
+            "_durationInBlocks": "0x32"
         }
     }
 }
