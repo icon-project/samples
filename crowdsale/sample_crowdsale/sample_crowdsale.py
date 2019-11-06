@@ -33,7 +33,6 @@ class SampleCrowdsale(IconScoreBase):
 
     def __init__(self, db: IconScoreDatabase) -> None:
         super().__init__(db)
-        self.__db = db  # for temporary workaround of ArrayDB issue
 
         self._addr_beneficiary = VarDB(self._ADDR_BENEFICIARY, db, value_type=Address)
         self._addr_token_score = VarDB(self._ADDR_TOKEN_SCORE, db, value_type=Address)
@@ -42,12 +41,9 @@ class SampleCrowdsale(IconScoreBase):
         self._dead_line = VarDB(self._DEAD_LINE, db, value_type=int)
         self._price = VarDB(self._PRICE, db, value_type=int)
         self._balances = DictDB(self._BALANCES, db, value_type=int)
+        self._joiner_list = ArrayDB(self._JOINER_LIST, db, value_type=Address)
         self._funding_goal_reached = VarDB(self._FUNDING_GOAL_REACHED, db, value_type=bool)
         self._crowdsale_closed = VarDB(self._CROWDSALE_CLOSED, db, value_type=bool)
-
-    @property
-    def _joiner_list(self) -> ArrayDB:
-        return ArrayDB(self._JOINER_LIST, self.__db, value_type=Address)
 
     def on_install(self, _fundingGoalInIcx: int, _tokenScore: Address, _durationInBlocks: int) -> None:
         """
