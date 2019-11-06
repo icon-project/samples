@@ -2,7 +2,7 @@
 
 ## Overview
 
-* Provide a simple and solid reference implementation for ICON token starndard (IRC2)
+* Provide a simple and solid reference implementation for ICON token standard (IRC2)
 
 ## Deployment
 

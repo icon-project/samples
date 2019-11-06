@@ -27,11 +27,15 @@ class TestSampleToken(IconIntegrateTestBase):
         # self.icon_service = IconService(HTTPProvider(self.TEST_HTTP_ENDPOINT_URI_V3))
 
         # install SCORE
+        self.name = 'MySampleToken'
+        self.symbol = 'MST'
         self.initial_supply = 1
         self.decimals = 6
         params = {
-            '_initialSupply': self.initial_supply,
-            '_decimals': self.decimals
+            '_name': self.name,
+            '_symbol': self.symbol,
+            '_decimals': self.decimals,
+            '_initialSupply': self.initial_supply
         }
         self._score_address = self._deploy_score(params=params)['scoreAddress']
 
@@ -76,7 +80,7 @@ class TestSampleToken(IconIntegrateTestBase):
         # Sends the call request
         response = self.process_call(call, self.icon_service)
 
-        self.assertEqual("SampleToken", response)
+        self.assertEqual(self.name, response)
 
     def test_call_symbol(self):
         # Generates a call instance using the CallBuilder
@@ -88,7 +92,7 @@ class TestSampleToken(IconIntegrateTestBase):
         # Sends the call request
         response = self.process_call(call, self.icon_service)
 
-        self.assertEqual("ST", response)
+        self.assertEqual(self.symbol, response)
 
     def test_call_decimals(self):
         # Generates a call instance using the CallBuilder

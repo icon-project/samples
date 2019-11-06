@@ -9,8 +9,10 @@
         "contentType": "zip",
         "mode": "install",
         "scoreParams": {
-            "_initialSupply": "0x3e8",
-            "_decimals": "0x12"
+            "_name": "MySampleToken",
+            "_symbol": "MST",
+            "_decimals": "0x12",
+            "_initialSupply": "0x3e8"
         }
     }
 }
