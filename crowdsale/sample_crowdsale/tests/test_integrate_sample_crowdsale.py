@@ -31,8 +31,10 @@ class TestSampleCrowdsale(IconIntegrateTestBase):
 
         # install sample token SCORE
         self.token_initial_supply = 1
-        self.decimals = 6
+        self.decimals = 18
         params = {
+            '_name': 'MySampleToken',
+            '_symbol': 'MST',
             '_initialSupply': self.token_initial_supply,
             '_decimals': self.decimals
         }
@@ -40,10 +42,10 @@ class TestSampleCrowdsale(IconIntegrateTestBase):
         self._token_score_address = tx_result['scoreAddress']
 
         # install sample crowdsale SCORE
-        self.fundingGoalInIcx = (self.token_initial_supply * 10 ** self.decimals)
+        self.fundingGoal = self.token_initial_supply * 10 ** self.decimals
         self.durationInBlocks = 5
         params = {
-            '_fundingGoalInIcx': self.fundingGoalInIcx,
+            '_fundingGoalInIcx': self.token_initial_supply,
             '_tokenScore': self._token_score_address,
             '_durationInBlocks': self.durationInBlocks,
         }
@@ -141,6 +143,13 @@ class TestSampleCrowdsale(IconIntegrateTestBase):
 
         return tx_result
 
+    def _find_event_with_func_sig(self, event_logs, func_sig):
+        for event_log in event_logs:
+            if event_log['scoreAddress'] == self._score_address and \
+                    event_log['indexed'][0] == func_sig:
+                return event_log
+        return None
+
     def test_score_update(self):
         # update SCORE
         tx_result = self._deploy_score(score_path=self.TOKEN_SCORE_PROJECT, to=self._score_address)
@@ -154,22 +163,25 @@ class TestSampleCrowdsale(IconIntegrateTestBase):
         # Make params of transfer method
         params = {
             "_to": self._score_address,
-            "_value": self.fundingGoalInIcx
-
+            "_value": self.fundingGoal
         }
         # Send all tokens to crowdsale SCORE
-        self._transaction_call(self._test1, self._token_score_address, 'transfer', params)
+        response = self._transaction_call(self._test1, self._token_score_address, 'transfer', params)
+        # check event log
+        event = self._find_event_with_func_sig(response['eventLogs'], 'CrowdsaleStarted(int,int)')
+        self.assertIsNotNone(event)
+        self.assertEqual(hex(self.fundingGoal), event['data'][0])
 
         # Check token balance of crowdsale SCORE
         response = self._token_balance(owner=self._score_address, score_address=self._token_score_address)
-        self.assertEqual(hex(self.fundingGoalInIcx), response)
+        self.assertEqual(hex(self.fundingGoal), response)
 
     def test_fund_to_crowdsale(self):
         # prepare crowdsale
         self.test_transfer_token_to_crowdsale()
 
         contributor_count = 4
-        contribute_value = self.fundingGoalInIcx // contributor_count
+        contribute_value = self.fundingGoal // contributor_count
         for i in range(contributor_count):
             # Initialize balance of contributor
             self._transfer_icx(self._test1,
@@ -190,13 +202,11 @@ class TestSampleCrowdsale(IconIntegrateTestBase):
         # send checkGoalReached transaction
         response = self._transaction_call(self._test1, self._score_address, 'checkGoalReached')
         # check event log
-        event_logs = response['eventLogs']
-        for event_log in event_logs:
-            if event_log['scoreAddress'] == self._score_address:
-                indexed = event_log['indexed']
-                self.assertEqual('GoalReached(Address,int)', indexed[0])
-                self.assertEqual(self._test1.get_address(), indexed[1])
-                self.assertEqual(hex(self.fundingGoalInIcx), indexed[2])
+        event = self._find_event_with_func_sig(response['eventLogs'], 'GoalReached(Address,int)')
+        self.assertIsNotNone(event)
+        indexed = event['indexed']
+        self.assertEqual(self._test1.get_address(), indexed[1])
+        self.assertEqual(hex(self.fundingGoal), indexed[2])
 
     def test_safe_withdrawal(self):
         # prepare and end crowdsale
@@ -205,13 +215,9 @@ class TestSampleCrowdsale(IconIntegrateTestBase):
         # send safeWithdrawal transaction
         response = self._transaction_call(self._test1, self._score_address, 'safeWithdrawal')
         # check event log
-        event_logs = response['eventLogs']
-        for event_log in event_logs:
-            indexed = event_log['indexed']
-            if event_log['scoreAddress'] == self._score_address:
-                if indexed[0] == 'FundTransfer(Address,int,bool)':
-                    indexed = event_log['indexed']
-                    self.assertEqual(self._test1.get_address(), indexed[1])
-                    self.assertEqual(hex(self.fundingGoalInIcx), indexed[2])
-                    self.assertEqual(hex(False), indexed[3])
-
+        event = self._find_event_with_func_sig(response['eventLogs'], 'FundTransfer(Address,int,bool)')
+        self.assertIsNotNone(event)
+        indexed = event['indexed']
+        self.assertEqual(self._test1.get_address(), indexed[1])
+        self.assertEqual(hex(self.fundingGoal), indexed[2])
+        self.assertEqual(hex(False), indexed[3])
