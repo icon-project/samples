@@ -60,7 +60,7 @@ class HelloWorld(IconScoreBase):
 
     @external
     def tokenFallback(self, _from: Address, _value: int, _data: bytes):
-        Logger.info('tokenFallabck is called', TAG)
+        Logger.info('tokenFallback is called', TAG)
 ```
 
 `fallback` function is added to accept ICX. `fallback` function is executed when the contract receives a transaction request without `data` part. Not having `data` in the transaction means no method name is specified. In such case, `fallback` function is invoked if the function is provided. If `fallback` function is not given, the transaction will fail. 
@@ -153,6 +153,6 @@ If you tailed a log, you would see the logs printing.
 $ tail -f tbears.log | grep '\[HelloWorld\]'
 [INFO|logger.py:332] 2018-10-07 18:10:48,974 > [HelloWorld] Hello, world!
 [INFO|logger.py:332] 2018-10-07 18:10:58,194 > [HelloWorld] fallback is called
-[INFO|logger.py:332] 2018-10-07 18:10:58,219 > [HelloWorld] tokenFallabck is called
+[INFO|logger.py:332] 2018-10-07 18:10:58,219 > [HelloWorld] tokenFallback is called
 ```
 

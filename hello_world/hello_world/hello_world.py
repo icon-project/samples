@@ -12,7 +12,7 @@ class HelloWorld(IconScoreBase):
 
     def on_update(self) -> None:
         super().on_update()
-    
+
     @external(readonly=True)
     def name(self) -> str:
         return "HelloWorld"
@@ -28,4 +28,4 @@ class HelloWorld(IconScoreBase):
 
     @external
     def tokenFallback(self, _from: Address, _value: int, _data: bytes):
-        Logger.info('tokenFallabck is called', TAG)
+        Logger.info('tokenFallback is called', TAG)
